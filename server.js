@@ -27,11 +27,15 @@ app.get("/card", async (req, res) => {
 });
 
 app.post("/card", async (req, res) => {
-  console.log(req.body);
-  const card = new Card(req.body);
-  console.log(card);
-  await card.save();
-  res.status(201).json(card);
+  try {
+    console.log(req.body);
+    const card = new Card(req.body);
+    console.log(card);
+    await card.save();
+    res.status(201).json(card);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 app.listen(3000, () => {
