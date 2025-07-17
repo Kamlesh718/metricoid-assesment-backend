@@ -2,14 +2,17 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const Card = require("./models/Card");
+const { configDotenv } = require("dotenv");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+configDotenv();
+
 const connectToDB = async () => {
   try {
-    await mongoose.connect("mongodb://localhost:27017/test");
+    await mongoose.connect(process.env.MONGODB_URI);
     console.log("Connected to mongodb");
   } catch (err) {
     console.error("Faced some error while connecting to mongo", err.message);
