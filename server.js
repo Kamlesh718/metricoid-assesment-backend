@@ -22,8 +22,13 @@ const connectToDB = async () => {
 connectToDB();
 
 app.get("/card", async (req, res) => {
-  const card = await Card.find();
-  res.status(200).json(card);
+  try {
+    const card = await Card.find();
+    res.status(200).json(card);
+  } catch (error) {
+    console.error("Error fetching cards:", error.message);
+    res.status(500).json({ error: error.message });
+  }
 });
 
 app.post("/card", async (req, res) => {
